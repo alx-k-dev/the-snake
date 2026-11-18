@@ -40,9 +40,65 @@ clock = pygame.time.Clock()
 
 
 # Тут опишите все классы игры.
-...
+class GameObject:
+    """Базовый класс для игровых объектов на поле."""
+
+    def __init__(self, body_color=None):
+        self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
+        self.body_color = body_color
+
+    def draw(self):
+        """Отрисовывает объект на экране."""
+        pass
 
 
+class Apple(GameObject):
+    """Игровой объект яблоко."""
+
+    def __init__(self):
+        super().__init__(body_color=APPLE_COLOR)
+        self.randomize_position()
+
+    def randomize_position(self):
+        """Задает яблоку случайную позицию."""
+        position_x = randint(0, GRID_WIDTH - 1) * GRID_SIZE
+        position_y = randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        self.position = (position_x, position_y)
+
+    def draw(self):
+        """Отрисовывает яблоко на игровом поле."""
+        rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(screen, self.body_color, rect)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+
+class Snake(GameObject):
+    """Игровой объект змейка."""
+
+    def __init__(self):
+        super().__init__(body_color=SNAKE_COLOR)
+        self.length = 1
+        self.positions = [self.position]
+        self.direction = RIGHT
+        self.next_direction = None
+        self.last = None
+
+    def get_head_position(self):
+        """Возвращает координаты головы змейки."""
+        return self.positions[0]
+
+    def move(self):
+        """Передвигает змейку на одну клетку."""
+        head_x, head_y = self.get_head_position()
+        dx, dy = self.direction
+        new_head = (
+            (head_x + dx * GRID_SIZE) % SCREEN_WIDTH,
+            (head_y + dy * GRID_SIZE) % SCREEN_HEIGHT,
+        )
+        self.positions.insert(0, new_head)
+        if len(self.positions) > self.length:
+            self.last = self.positions[-1]
+            self.positions.pop()
+    
 def main():
     # Инициализация PyGame:
     pygame.init()
