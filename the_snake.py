@@ -86,6 +86,7 @@ class Snake(GameObject):
     """Игровой объект змейка."""
 
     def __init__(self):
+        super().__init__(body_color=SNAKE_COLOR)
         self.reset(direction=RIGHT)
 
     def get_head_position(self):
@@ -113,7 +114,6 @@ class Snake(GameObject):
 
     def reset(self, direction=None):
         """Сбрасывает змейку в начальное состояние."""
-        super().__init__(body_color=SNAKE_COLOR)
         self.length = 1
         self.positions = [self.position]
         self.direction = direction if direction else choice(
