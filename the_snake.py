@@ -14,11 +14,11 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-# Разрешенные переходы: (текущее направлениеб клавиша) -> новое направление
+# Разрешенные переходы: (текущее направление, клавиша) -> новое направление
 DIRECTION_CHANGES = {
     (UP, pg.K_LEFT): LEFT,
     (UP, pg.K_RIGHT): RIGHT,
-    (DOWN, pg,K_LEFT): LEFT,
+    (DOWN, pg.K_LEFT): LEFT,
     (DOWN, pg.K_RIGHT): RIGHT,
     (LEFT, pg.K_UP): UP,
     (LEFT, pg.K_DOWN): DOWN,
