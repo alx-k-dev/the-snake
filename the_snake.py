@@ -14,6 +14,9 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
+# Все направления - для случайного выбора
+DIRECTIONS = (UP, DOWN, LEFT, RIGHT)
+
 # Разрешенные переходы: (текущее направление, клавиша) -> новое направление
 DIRECTION_CHANGES = {
     (UP, pg.K_LEFT): LEFT,
@@ -133,9 +136,7 @@ class Snake(GameObject):
         """Сбрасывает змейку в начальное состояние."""
         self.length = 1
         self.positions = [self.position]
-        self.direction = direction if direction else choice(
-            [UP, DOWN, LEFT, RIGHT]
-        )
+        self.direction = direction if direction else choice(DIRECTIONS)
         self.next_direction = None
         self.last = None
 
