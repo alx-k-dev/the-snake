@@ -182,7 +182,9 @@ def main():
             snake.length += 1
             apple.randomize_position(snake)
 
-        if snake.get_head_position() in snake.positions[1:]:
+        # Первые 4 сегмента (голова и 3 за ней) безопасны:
+        # голова не может развернуться на 180 градусов за один ход.
+        if snake.get_head_position() in snake.positions[4:]:
             snake.reset()
 
         screen.fill(BOARD_BACKGROUND_COLOR)
