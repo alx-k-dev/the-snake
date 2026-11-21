@@ -58,12 +58,17 @@ class GameObject:
         self.position = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.body_color = body_color
 
-    def draw_cell(self, position, color, border=True):
+    def draw_cell(self, position, border=True):
         """Рисует одну клетку поля в указанной позиции."""
         rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
-        pg.draw.rect(screen, color, rect)
+        pg.draw.rect(screen, self.body_color, rect)
         if border:
             pg.draw.rect(screen, BORDER_COLOR, rect, 1)
+
+    def erase_cell(self, position):
+        """Затирает клетку цветом фона."""
+        rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
+        pg.draw.rect(screen, BOARD_BACKGROUND_COLOR, rect)
 
     def draw(self):
         """Отрисовывает объект на экране."""
@@ -91,7 +96,7 @@ class Apple(GameObject):
 
     def draw(self):
         """Отрисовывает яблоко на игровом поле."""
-        self.draw_cell(self.position, self.body_color)
+        self.draw_cell(self.position)
 
 
 class Snake(GameObject):
@@ -137,12 +142,12 @@ class Snake(GameObject):
     def draw(self):
         """Отрисовывает змейку на игровом поле."""
         for position in self.positions[1:]:
-            self.draw_cell(position, self.body_color)
+            self.draw_cell(position)
 
-        self.draw_cell(self.positions[0], self.body_color)
+        self.draw_cell(self.positions[0])
 
         if self.last:
-            self.draw_cell(self.last, BOARD_BACKGROUND_COLOR, border=False)
+            self.erase_cell(self.last)
 
 
 def handle_keys(game_object):
